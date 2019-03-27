@@ -1,11 +1,11 @@
 import Foundation
 
+// enums makes string the same as
+// name of case when you don't specify
 enum ColorName: String {
-    case black = "black"
-    case silver = "silver"
-    case gray = "gray"
-    case white = "white"
-    case maroon = "maroon"
-    case red = "red"
-    // etc.
+    case black, silver, gray, white, maroon, red, purple, fuchsia, green,
+    lime, olive, yellow, navy, blue, teal, aqua
 }
+
+let fill = ColorName.gray
+
