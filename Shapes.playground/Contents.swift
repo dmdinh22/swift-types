@@ -80,6 +80,7 @@ protocol DrawingContext {
 }
 
 // define Circle struct that adopts Drawable protocol
+@dynamicMemberLookup
 struct Circle: Drawable {
     var strokeWidth = 5
     var strokeColor = CSSColor.named(name: .red)
@@ -91,5 +92,50 @@ struct Circle: Drawable {
     func draw(with context: DrawingContext) {
         context.draw(self)
     }
+    // implement subscript(dynamicMember:) to fulfill @dynamicMemberLookup
+    subscript(dynamicMember member: String) -> String {
+        let properties = ["name": "Mr Circle"]
+        return properties[member, default: ""]
+    }
 }
+
+let circle = Circle()
+let circleName = circle.name
+
+// @dynamicMemberLookup can be added to class, struct, enum or protocol
+
+// Structs vs Classes
+// structs are value types and classes are reference types
+
+// VALUES TYPES
+var a = 10
+var b = a
+a = 30 // b still holds value of 10
+a == b // evaluates false 30 != 10
+
+var aCircle = Circle()
+aCircle.radius = 60.0
+var bCircle = aCircle
+aCircle.radius = 1000.0 // b.radius holds value of 60.0
+print(bCircle.radius)
+
+// REFERENCE TYPES
+class CircleClass: Drawable {
+    var strokeWidth = 5
+    var strokeColor = CSSColor.named(name: .red)
+    var fillColor = CSSColor.named(name: .yellow)
+    var center = (x: 80.0, y: 160.0)
+    var radius = 60.0
+    
+    func draw(with context: DrawingContext) {
+        // implement here
+    }
+}
+
+var x = CircleClass() // class based circle
+x.radius = 60.0
+var y = x
+x.radius = 1000.0
+// y.radius also references the x object, which means y.radius becomes 1000.0
+print(y.radius)
 
