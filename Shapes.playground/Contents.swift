@@ -77,6 +77,8 @@ protocol Drawable {
 
 protocol DrawingContext {
     func draw(_ circle: Circle)
+    func draw(_ circleClass: CircleClass)
+    func draw(_ rectangle: Rectangle)
 }
 
 // define Circle struct that adopts Drawable protocol
@@ -128,7 +130,7 @@ class CircleClass: Drawable {
     var radius = 60.0
     
     func draw(with context: DrawingContext) {
-        // implement here
+        context.draw(self)
     }
 }
 
@@ -139,3 +141,14 @@ x.radius = 1000.0
 // y.radius also references the x object, which means y.radius becomes 1000.0
 print(y.radius)
 
+struct Rectangle: Drawable {
+    var strokeWidth = 5
+    var strokeColor = CSSColor.named(name: .teal)
+    var fillColor = CSSColor.named(name: .aqua)
+    var origin = (x: 110.0, y: 10.0)
+    var size = (width: 100.0, height: 130.0)
+    
+    func draw(with context: DrawingContext) {
+        context.draw(self)
+    }
+}
