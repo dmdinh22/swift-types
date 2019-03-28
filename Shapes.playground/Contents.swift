@@ -1,5 +1,6 @@
 import Foundation
 
+// ## ENUMS ##
 // enums makes string the same as
 // name of case when you don't specify
 // CaseIterable makes the enum iterable in order of definition
@@ -62,3 +63,33 @@ extension CSSColor {
 for color in CSSColor.ColorName.allCases {
     print("I love the color \(color).")
 }
+
+//takeaway: enums are great for picking items from a list of well-known things (ie. days of week, faces of a coin)
+
+// ## STRUCTS ##
+// to allow users to define their own custom shapes,
+// enum is not a good type - cannot add new enum cases later in an extension
+
+// when creating new model - start w/ protocol (like an interface)
+protocol Drawable {
+    func draw(with context: DrawingContext)
+}
+
+protocol DrawingContext {
+    func draw(_ circle: Circle)
+}
+
+// define Circle struct that adopts Drawable protocol
+struct Circle: Drawable {
+    var strokeWidth = 5
+    var strokeColor = CSSColor.named(name: .red)
+    var fillColor = CSSColor.named(name: .yellow)
+    var center = (x: 80.0, y: 160.0)
+    var radius = 60.0
+    
+    // adopting the Drawable protocol
+    func draw(with context: DrawingContext) {
+        context.draw(self)
+    }
+}
+
