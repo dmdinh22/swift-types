@@ -217,4 +217,21 @@ struct SVGDocument {
     }
 }
 
+var document = SVGDocument()
+
+let rectangle = Rectangle()
+document.append(rectangle)
+
+let circle = Circle()
+document.append(circle)
+
+let htmlString = document.htmlString
+print(htmlString)
+
+import WebKit
+import PlaygroundSupport
+let view = WKWebView(frame: CGRect(x: 0, y: 0, width: 300, height: 300))
+view.loadHTMLString(htmlString, baseURL: nil)
+PlaygroundPage.current.liveView = view
+
 
