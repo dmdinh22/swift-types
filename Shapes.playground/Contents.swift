@@ -77,7 +77,7 @@ protocol Drawable {
 
 protocol DrawingContext {
     func draw(_ circle: Circle)
-    func draw(_ circleClass: CircleClass)
+//    func draw(_ circleClass: CircleClass)
     func draw(_ rectangle: Rectangle)
 }
 
@@ -130,7 +130,7 @@ class CircleClass: Drawable {
     var radius = 60.0
     
     func draw(with context: DrawingContext) {
-        context.draw(self)
+//        context.draw(self)
     }
 }
 
@@ -152,3 +152,69 @@ struct Rectangle: Drawable {
         context.draw(self)
     }
 }
+
+final class SVGContext: DrawingContext {
+    private var commands: [String] = [] //initialized as empty string array
+    
+    var width = 250
+    var height = 250
+    
+    // 1
+    func draw(_ circle: Circle) {
+        let command =
+        """
+        <circle cx='\(circle.center.x)' cy='\(circle.center.y)\' r='\(circle.radius)' \
+        stroke='\(circle.strokeColor)' fill='\(circle.fillColor)' \
+        stroke-width='\(circle.strokeWidth)' />
+        """
+        
+        commands.append(command)
+    }
+    
+    // 2
+    func draw(_ rectangle: Rectangle) {
+        let command =
+        """
+        <rect x='\(rectangle.origin.x)' y='\(rectangle.origin.y)' \
+        width='\(rectangle.size.width)' height='\(rectangle.size.height)' \
+        stroke='\(rectangle.strokeColor)' fill='\(rectangle.fillColor)' \
+        stroke-width='\(rectangle.strokeWidth)' />
+
+        """
+        commands.append(command)
+    }
+    
+    var svgString: String {
+        var output = "<svg width='\(width)' height='\(height)'>"
+        
+        for command in commands {
+            output += command
+        }
+        
+        output += "</svg>"
+        return output
+    }
+    
+    var htmlString: String {
+        return  "<!DOCTYPE html><html><body> \(svgString) </body></html>"
+    }
+}
+
+struct SVGDocument {
+    var drawables: [Drawable] = []
+    
+    var htmlString: String {
+        let context = SVGContext()
+        for drawable in drawables {
+            drawable.draw(with: context)
+        }
+        
+        return context.htmlString
+    }
+    
+    mutating func append(_ drawable: Drawable) {
+        drawables.append(drawable)
+    }
+}
+
+
