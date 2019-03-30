@@ -237,44 +237,67 @@ PlaygroundPage.current.liveView = view
 
 // ## CLASSES ##
 // for reference
-/*
-class Shape {
-    var strokeWidth = 1
-    var strokeColor = CSSColor.named(name: .black)
-    var fillColor = CSSColor.named(name: .black)
-    var origin = (x: 0.0, y: 0.0)
-    func draw(with context: DrawingContext) { fatalError("not implemented") }
-}
+//
+//class Shape {
+//    var strokeWidth = 1
+//    var strokeColor = CSSColor.named(name: .black)
+//    var fillColor = CSSColor.named(name: .black)
+//    var origin = (x: 0.0, y: 0.0)
+//    func draw(with context: DrawingContext) { fatalError("not implemented") }
+//}
+//
+//class Circle: Shape {
+//    override init() {
+//        super.init()
+//        strokeWidth = 5
+//        strokeColor = CSSColor.named(name: .red)
+//        fillColor = CSSColor.named(name: .yellow)
+//        origin = (x: 80.0, y: 80.0)
+//    }
+//
+//    var radius = 60.0
+//    override func draw(with context: DrawingContext) {
+//        context.draw(self)
+//    }
+//}
+//
+//class Rectangle: Shape {
+//    override init() {
+//        super.init()
+//        strokeWidth = 5
+//        strokeColor = CSSColor.named(name: .teal)
+//        fillColor = CSSColor.named(name: .aqua)
+//        origin = (x: 110.0, y: 10.0)
+//    }
+//
+//    var size = (width: 100.0, height: 130.0)
+//    override func draw(with context: DrawingContext) {
+//        context.draw(self)
+//    }
+//}
 
-class Circle: Shape {
-    override init() {
-        super.init()
-        strokeWidth = 5
-        strokeColor = CSSColor.named(name: .red)
-        fillColor = CSSColor.named(name: .yellow)
-        origin = (x: 80.0, y: 80.0)
+
+extension Circle {
+    var diameter: Double {
+        get {
+            return radius * 2
+        }
+        
+        set {
+            radius = newValue / 2
+        }
     }
     
-    var radius = 60.0
-    override func draw(with context: DrawingContext) {
-        context.draw(self)
-    }
-}
-
-class Rectangle: Shape {
-    override init() {
-        super.init()
-        strokeWidth = 5
-        strokeColor = CSSColor.named(name: .teal)
-        fillColor = CSSColor.named(name: .aqua)
-        origin = (x: 110.0, y: 10.0)
+    var area: Double {
+        return radius * radius * Double.pi
     }
     
-    var size = (width: 100.0, height: 130.0)
-    override func draw(with context: DrawingContext) {
-        context.draw(self)
+    var perimeter: Double {
+        return 2 * radius * Double.pi
+    }
+    
+    mutating func shift(x: Double, y: Double) {
+        center.x += x
+        center.y += y
     }
 }
-*/
-
-
