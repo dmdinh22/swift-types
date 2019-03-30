@@ -296,8 +296,28 @@ extension Circle {
         return 2 * radius * Double.pi
     }
     
+    // structs do not allow muttating stored props
+    // need to declare that it's mutating to allow it
     mutating func shift(x: Double, y: Double) {
         center.x += x
         center.y += y
     }
 }
+
+// ## RETROACTIVE MODELING ##
+extension Rectangle {
+    var area: Double {
+        return size.width * size.height
+    }
+    
+    var perimeter: Double {
+        return 2 * (size.width + size.height)
+    }
+}
+
+protocol CloasedShape {
+    var area: Double { get }
+    var perimeter: Double { get }
+}
+
+
